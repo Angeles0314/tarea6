@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Galería de Imágenes</title>
+
+    <!-- Link para incluir Remix Icon -->
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@4.3.0/fonts/remixicon.css" rel="stylesheet"/>
+
+    <style>
+        /* Estilos generales para el cuerpo */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f7f7f7;
+            display: flex;
+            justify-content: center; /* Centramos todo el contenido */
+        }
+
+        /* Contenedor principal con tamaño fijo de 1024px */
+        .container {
+            width: 1024px; /* Ancho fijo para todo el contenido */
+            margin: 0 auto;
+        }
+
+        /* Barra superior estilo navbar con puntas redondeadas en todos los lados */
+        .navbar {
+            background-color: #d1006f;
+            padding: 20px;
+            text-align: center;
+            color: white;
+            border-radius: 20px; /* Puntas redondeadas en todos los lados */
+            margin-bottom: 20px; /* Espacio inferior */
+        }
+
+        .navbar h1 {
+            margin: 0;
+            font-size: 2rem;
+        }
+
+        /* Contenedor para la barra de iconos */
+        .navbar-bar {
+            height: 50px;
+            margin-bottom: 20px; /* Espacio inferior */
+            background-color: #35061f; /* Color rosado oscuro */
+            border-radius: 10px; /* Puntas redondeadas */
+            display: flex;
+            align-items: center;
+            justify-content: space-between; /* Ajusta la distribución */
+            padding: 0 10px; /* Espacio a los lados para reducir separación */
+            box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); /* Sombra ligera */
+            max-width: 1024px; /* Ajustar el ancho de la barra al 100% */
+            margin: 0 auto 20px auto; /* Centramos la barra horizontalmente */
+        }
+
+        /* Nueva lista para las palabras Inicio, Servicio y Contacto */
+        .nav-links {
+            list-style: none; /* Sin viñetas */
+            padding: 0; /* Sin padding */
+            display: flex; /* Flexbox para alinear los ítems */
+            margin: 0; /* Sin margen */
+            max-width: 300px; /* Ancho reducido para la lista */
+            justify-content: space-around; /* Espaciado uniforme */
+        }
+
+        .nav-links li {
+            margin: 0 10px; /* Reducir espacio horizontal entre los ítems */
+        }
+
+        .nav-links li h2 {
+            color: #ffffff; /* Color de letra blanco */
+            font-size: 16px; /* Tamaño de letra más pequeño */
+            margin: 0; /* Sin margen adicional */
+        }
+
+        /* Lista desordenada para íconos */
+        .icon-list {
+            list-style: none; /* Sin viñetas */
+            padding: 0; /* Sin padding */
+            display: flex; /* Flexbox para alinear los íconos */
+            margin: 0; /* Sin margen */
+            justify-content: space-around; /* Espaciado uniforme */
+        }
+
+        /* Íconos dentro de la barra */
+        .icon {
+            cursor: pointer;
+            font-size: 15px; /* Tamaño del icono más pequeño */
+            color: #ffffff; /* Color del icono */
+            text-decoration: none; /* Sin subrayado */
+            margin: 0 5px; /* Espaciado reducido entre los iconos */
+        }
+
+        .icon:hover {
+            color: #e5bfda; /* Color al pasar por encima del icono */
+        }
+
+        /* Galería estilo grid */
+        .gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            grid-gap: 15px;
+        }
+
+        .gallery img {
+            width: 100%;
+            height: auto;
+            border-radius: 10px;
+            transition: transform 0.3s ease;
+        }
+
+        .gallery img:hover {
+            transform: scale(1.05);
+            cursor: pointer;
+        }
+
+        /* Modal para mostrar las imágenes en tamaño completo */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            padding-top: 100px;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0, 0, 0, 0.9);
+        }
+
+        .modal-content {
+            margin: auto;
+            display: block;
+            width: 80%;
+            max-width: 700px;
+        }
+
+        .modal-content, #caption {
+            animation-name: zoom;
+            animation-duration: 0.6s;
+        }
+
+        @keyframes zoom {
+            from {transform: scale(0)} 
+            to {transform: scale(1)}
+        }
+
+        .close {
+            position: absolute;
+            top: 15px;
+            right: 35px;
+            color: rgb(98, 30, 63);
+            font-size: 40px;
+            font-weight: bold;
+            transition: 0.3s;
+        }
+
+        .close:hover, .close:focus {
+            color: #bbb;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        /* Estilos responsivos para diferentes tamaños de pantalla */
+        @media (max-width: 1024px) {
+            .container {
+                width: 100%; /* Para pantallas más pequeñas, ocupar el 100% */
+            }
+        }
+    </style>
+</head>
+<body>
+
+<!-- Contenedor principal que agrupa todos los elementos -->
+<div class="container">
+
+    <!-- Barra superior con puntas redondeadas -->
+    <div class="navbar">
+        <h1>Mi Galería</h1>
+    </div>
+      
+    <!-- Barra horizontal con íconos debajo de la barra rosada -->
+    <div class="navbar-bar">
+        <!-- Nueva lista para las palabras -->
+        <ul class="nav-links">
+            <li><h2>Inicio</h2></li>
+            <li><h2>Servicio</h2></li>
+            <li><h2>Contacto</h2></li>
+        </ul>
+        
+        <!-- Lista para los íconos con flexbox -->
+        <ul class="icon-list">
+            <li>
+                <a href="https://www.behance.net/catalinaprez15" target="_blank" class="icon">
+                    <i class="ri-behance-fill"></i>
+                </a>
+            </li>
+            <li>
+                <a href="https://wa.me/qr/6VG22RRTUJMRP1" target="_blank" class="icon">
+                    <i class="ri-whatsapp-line"></i>
+                </a>
+            </li>
+            <li>
+                <a href="https://mail.google.com/mail/u/0/?pli=1#inbox" target="_blank" class="icon">
+                    <i class="ri-mail-line"></i>
+                </a>
+            </li>
+            <li>
+                <a href="https://www.instagram.com/_.grim._.ghost._?igsh=NHN6eWVxMG9sZXFx" target="_blank" class="icon">
+                    <i class="ri-instagram-line"></i>
+                </a>
+            </li>
+            <li>
+                <a href="https://github.com/Angeles0314/tarea4-portafolioo" target="_blank" class="icon">
+                    <i class="ri-github-fill"></i>
+                </a>
+            </li>
+        </ul>
+    </div>
+
+    <!-- Galería de imágenes estilo grid -->
+    <div class="gallery">
+        <!-- Imágenes en el mismo orden -->
+        <img src="img/pexels-andrejcook-131723.jpg" alt="Imagen 1" id="img1">
+        <img src="img/pexels-aronvisuals-1743165.jpg" alt="Imagen 2" id="img2">
+        <img src="img/pexels-bri-schneiter-28802-346529.jpg" alt="Imagen 3" id="img3">
+        <img src="img/pexels-fotios-photos-1107717.jpg" alt="Imagen 4" id="img4">
+        <img src="img/pexels-fr3nks-356807.jpg" alt="Imagen 5" id="img5">
+        <img src="img/pexels-m-venter-792254-1659438.jpg" alt="Imagen 6" id="img6">
+        <img src="img/pexels-pedro-figueras-202443-681467.jpg" alt="Imagen 7" id="img7">
+        <img src="img/pexels-pixabay-147411.jpg" alt="Imagen 8" id="img8">
+        <img src="img/pexels-pixabay-247599.jpg" alt="Imagen 9" id="img9">
+        <img src="img/pexels-quang-nguyen-vinh-222549-2166711.jpg" alt="Imagen 10" id="img10">
+        <img src="img/pexels-samandgos-709552.jpg" alt="Imagen 11" id="img11">
+        <img src="img/imagen 12.jpg" alt="Imagen 12" id="img12">
+    </div>
+
+    <!-- Modal para ampliar imágenes -->
+    <div id="myModal" class="modal">
+        <span class="close">&times;</span>
+        <img class="modal-content" id="imgModal">
+        <div id="caption"></div>
+    </div>
+</div>
+
+</body>
+</html>
